@@ -16,6 +16,16 @@ export default {
     ]
   },
   /*
+ ** middleware
+ */
+  router: {
+    middleware: 'authentication'
+  },
+ server: {
+    port: 8000, // default: 3000
+    host: '178.128.54.250' // default: localhost
+  },
+  /*
   ** Customize the progress-bar color
   */
   loading: { color: '#fff' },
@@ -23,11 +33,13 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/main.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/axios'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -37,6 +49,9 @@ export default {
   /*
   ** Nuxt.js modules
   */
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:1337'
+  },
   modules: [
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',    // Doc: https://axios.nuxtjs.org/usage
@@ -47,6 +62,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+
   },
   /*
   ** Build configuration
@@ -55,7 +71,10 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
+      // config.node = {
+      //   fs: 'empty'
+      // }
     }
   }
 }

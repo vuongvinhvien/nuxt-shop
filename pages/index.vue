@@ -1,18 +1,14 @@
 <template>
   <div class="">
-    <Header />
-
-    <div class="row">
-    </div>
   </div>
 </template>
 <script>
-import Header from "~/components/Header.vue";
+
 import OrderPage from "~/components/OrderPage.vue";
 import OrderDetail from "~/components/OrderDetail.vue";
 export default {
   components: {
-    'Header': Header,
+
     'OrderPage': OrderPage,
     'OrderDetail': OrderDetail
   }

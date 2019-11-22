@@ -1,82 +1,91 @@
 <template>
-  <div class="container-fluid form-signin">
-    <b-card>
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group id="input-group-1" label="Email address:" label-for="input-1" description>
+  <section>
+    <div class="col-md-6 offset-md-3 mt-3">
+      <form autocomplete="off" @submit.stop.prevent="handleSubmit">
+        <div class="form-group">
+          <label for="email">Email</label>
           <b-form-input
-            id="input-1"
-            v-model="form.email"
+            id="email"
+            v-model="email"
             type="email"
+            placeholder="Enter your email"
             required
-            placeholder="Enter email"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-          <b-form-input id="input-2" v-model="form.name" required placeholder="Enter name"></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="input-group-4">
-          <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-            <b-form-checkbox value="me">Check me out</b-form-checkbox>
-            <b-form-checkbox value="that">Check that out</b-form-checkbox>
-          </b-form-checkbox-group>
-        </b-form-group>
-        <div class="row justify-content-center">
-                    <b-button type="submit" variant="outline-success">Đăng nhập</b-button>
+          />
         </div>
-        <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
-      </b-form>
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>
-    </b-card>
-  </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <b-form-input
+            id="password"
+            v-model="password"
+            label="password"
+            type="password"
+            class="form-control"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <button :disabled="loading" type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
+        <p class="text-center mt-3">
+          No account yet
+          <router-link :to="{ name: 'signup' }" tag="a">Contact Admin </router-link>
+        </p>
+      </form>
+    </div>
+  </section>
 </template>
-<style scoped>
-.form-signin {
-  max-width: 600px;
-  padding-top: 5%;
-}
-</style>
 <script>
+import Strapi from "strapi-sdk-javascript/build/main";
+import axios from "axios";
+let axiosSignin = axios.create({
+  baseURL: process.env.baseUrl
+});
+// const apiUrl = process.env.API_URL || "http://localhost:1337";
+// const strapi = new Strapi(apiUrl);
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
-      form: {
-        email: "",
-        name: "",
-        food: null,
-        checked: []
-      },
-      foods: [
-        { text: "Select One", value: null },
-        "Carrots",
-        "Beans",
-        "Tomatoes",
-        "Corn"
-      ],
-      show: true
+      email: "",
+      password: "",
+      loading: false
     };
   },
   methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
+    async handleSubmit() {
+      const formData = new FormData();
+      formData.append("identifier", this.email);
+      formData.append("password", this.password);
+      try {
+        axiosSignin
+          .post("/auth/local", formData, {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            }
+          })
+          .then(response => {
+            // Handle success.
+            console.log("Well done!");
+            console.log("User profile", response.data.user);
+            console.log("User token", response.data.jwt);
+            this.setUser(response.data.user);
+            this.setAuthorization(response.data.jwt);
+                    window.location.href = "/orders";
+          })
+          .catch(error => {
+            // Handle error.
+            console.log("An error occurred:", error);
+          });
+        // const response = await strapi.login(this.email, this.password);
+
+      } catch (err) {
+        this.loading = false;
+        alert(err.message || "An error occurred.");
+      }
     },
-    onReset(evt) {
-      evt.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.name = "";
-      this.form.food = null;
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
-    }
+    ...mapMutations({
+      setUser: "auth/setUser",
+      setAuthorization: "auth/setAuthorization"
+    })
   }
 };
 </script>
