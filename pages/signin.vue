@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="col-md-6 offset-md-3 mt-3">
+    <div class="col-md-4 offset-md-4 mt-3">
       <form autocomplete="off" @submit.stop.prevent="handleSubmit">
         <div class="form-group">
           <label for="email">Email</label>

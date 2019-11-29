@@ -20,7 +20,12 @@
     "js-cookie": "^2.2.1",
     "nuxt": "^2.0.0",
     "strapi-sdk-javascript": "^0.3.3",
-    "vue-multiselect": "^2.1.6"
+    "vue-icon": "^2.1.1",
+    "vue-multiselect": "^2.1.6",
+    "vue-unicons": "^1.4.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0"
+  }
 }

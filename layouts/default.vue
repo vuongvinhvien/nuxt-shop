@@ -60,4 +60,8 @@ html {
   color: #fff;
   background-color: #35495e;
 }
+.container-fluid{
+  padding-left:0px!important;
+  padding-right:0px!important; 
+}
 </style>

@@ -189,7 +189,7 @@ export default {
   },
   methods: {
     currentPageChange() {
-      console.log("pagechange");
+      // console.log("pagechange");
     },
     changeOption() {
       this.items = this.itemsdefault;
@@ -199,7 +199,7 @@ export default {
     },
     orderBy(object,key) {
       object.sort((a, b) => Number(a.type) - Number(b.type))
-      console.log(object)
+      // console.log(object)
     },
     getShopOrders() {
       if (this.user.shop) {
@@ -231,17 +231,9 @@ export default {
     },
     getOptions() {
       let responseVM = axios
-        // .get(`http://localhost:1337/orderstatuses`, {
-        //   headers: {
-        //     Authorization: `Bearer ${this.$store.getters['auth/token']}`
-        //   }
-        // })
         .get(`/orderstatuses`)
         .then(response => {
-          // console.log(response);
-          console.log(response.data)
           this.orderBy(response.data, "type")
-          console.log(response.data)
           this.value = response.data[0];
           this.options = response.data;
         })

@@ -2,8 +2,8 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="light" variant="light">
-      <b-navbar-brand :to="'/'" v-show="isAuthenticated">Home</b-navbar-brand>
-      <!-- <b-navbar-toggle target="nav-collapse"></b-navbar-toggle> -->
+      <b-navbar-brand :to="'/orders'" v-show="isAuthenticated">Home</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav v-show="isAuthenticated">
           <b-nav-item-dropdown text="Đơn hàng" left>

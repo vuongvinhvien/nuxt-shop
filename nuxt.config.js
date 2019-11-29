@@ -21,9 +21,13 @@ export default {
   router: {
     middleware: 'authentication'
   },
- server: {
-    port: 8000, // default: 3000
-    host: '178.128.54.250' // default: localhost
+  server: {
+    port: 3000, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  },
+  env: {
+    // baseUrl: process.env.BASE_URL || 'http://178.128.54.250:1337'
+    baseUrl: process.env.BASE_URL || 'http://localhost:1337'
   },
   /*
   ** Customize the progress-bar color
@@ -47,15 +51,13 @@ export default {
   buildModules: [
   ],
   /*
-  ** Nuxt.js modules
+  ** Nuxt.js modules 
   */
-  env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:1337'
-  },
+
   modules: [
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
   /*
   ** Axios module configuration
